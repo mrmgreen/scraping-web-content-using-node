@@ -22,7 +22,7 @@ app.get('/scrape', function(req,res) {
 
       // finally, we'll define the variables we're going to capture
       var title, release, rating;
-      var json = {title: '', release: '', rating: ''};
+      var json = {title: '', release: '', rating: '', description: ''};
 
       $('.header').filter(function () {
 
@@ -48,7 +48,13 @@ app.get('/scrape', function(req,res) {
         rating = data.text();
 
         json.rating = rating;
-      })
+      });
+
+      $("[itemprop='description']").first().filter(function() {
+        var data = $(this);
+        description = data.text();
+        json.description = description;
+      });
     }
 
     // To write to the system we will use the built in 'fs' library.
